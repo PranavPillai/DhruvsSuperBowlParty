@@ -56,28 +56,28 @@ export const answersAirtableRes = {
   ]
 }
 
-interface StringKeyAnyValueObject {
+export interface StringKeyAnyValueObject {
   [key: string]: any
 }
 
-interface AirtableRecord {
+export interface AirtableRecord {
   createdTime: string,
   id: string,
   fields: StringKeyAnyValueObject
 }
 
-interface AirtableRes {
+export interface AirtableRes {
   records: AirtableRecord[]
 }
 
-interface Answer {
+export interface Answer {
   question: string,
   answer: any,
   answered: boolean,
   correct: boolean,
 }
 
-interface LeaderboardEntry {
+export interface LeaderboardEntry {
   name: any,
   submitted_at: any,
   num_correct: number,

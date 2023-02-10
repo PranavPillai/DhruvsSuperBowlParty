@@ -2,7 +2,7 @@ import Card from "@/components/home/card";
 import Layout from "@/components/layout";
 import Balancer from "react-wrap-balancer";
 import { motion } from "framer-motion";
-import { DEPLOY_URL, FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
+import { DEPLOY_URL, FADE_DOWN_ANIMATION_VARIANTS, getAnswersFromAirtableRes, getLeaderboardEntriesFromAirtableRes, LeaderboardEntry } from "@/lib/constants";
 import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
@@ -11,9 +11,8 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
 
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [responses, setResponses] = useState(null);
-  const [answers, setAnswers] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
+  const [leaderboardEntries, setLeaderboardEntries] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function Home() {
       ).then((res) => res.json())
       .then((data) => {
         console.log(data)
-        setResponses(data)
+        setLeaderboardEntries(data)
         fetch(
           "https://api.airtable.com/v0/appFfxMKHMojEes0m/Answers?maxRecords=500&view=Grid%20view",
           {
@@ -42,13 +41,14 @@ export default function Home() {
           }
         ).then((res) => res.json())
         .then((data) => {
-          console.log(data)
-          setAnswers(data)
+          const answersObjects = getAnswersFromAirtableRes(data);
+          const leaderboardObjects = getLeaderboardEntriesFromAirtableRes(data, answersObjects);
+          setLeaderboardEntries(leaderboardObjects);
           setLoading(false)
         })
       })
     }
-  }, [responses, answers, loading, dataLoaded])
+  }, [leaderboardEntries, loading, dataLoaded])
 
   return (
     <Layout>
