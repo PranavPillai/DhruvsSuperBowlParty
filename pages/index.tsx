@@ -7,8 +7,49 @@ import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [responses, setResponses] = useState(null);
+  const [answers, setAnswers] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    if(!dataLoaded) {
+      setDataLoaded(true);
+      fetch(
+        "https://api.airtable.com/v0/appFfxMKHMojEes0m/Responses?maxRecords=500&view=Grid%20view",
+        {
+          method: "GET",
+          headers: new Headers({
+            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_API_KEY}`
+          })
+        }
+      ).then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setResponses(data)
+        fetch(
+          "https://api.airtable.com/v0/appFfxMKHMojEes0m/Answers?maxRecords=500&view=Grid%20view",
+          {
+            method: "GET",
+            headers: new Headers({
+              "Authorization": `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_API_KEY}`
+            })
+          }
+        ).then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          setAnswers(data)
+          setLoading(false)
+        })
+      })
+    }
+  }, [responses, answers, loading, dataLoaded])
+
   return (
     <Layout>
       <motion.div
