@@ -7,6 +7,7 @@ import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
+import LeaderboardEntryComponent from "@/components/home/leaderboard-entry";
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -28,9 +29,8 @@ export default function Home() {
           })
         }
       ).then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setLeaderboardEntries(data)
+      .then((responseData) => {
+        console.log(responseData)
         fetch(
           "https://api.airtable.com/v0/appFfxMKHMojEes0m/Answers?maxRecords=500&view=Grid%20view",
           {
@@ -40,9 +40,11 @@ export default function Home() {
             })
           }
         ).then((res) => res.json())
-        .then((data) => {
-          const answersObjects = getAnswersFromAirtableRes(data);
-          const leaderboardObjects = getLeaderboardEntriesFromAirtableRes(data, answersObjects);
+        .then((answersData) => {
+          const answersObjects = getAnswersFromAirtableRes(answersData);
+          const leaderboardObjects = getLeaderboardEntriesFromAirtableRes(responseData, answersObjects);
+          
+          console.log(leaderboardObjects)
           setLeaderboardEntries(leaderboardObjects);
           setLoading(false)
         })
@@ -74,9 +76,14 @@ export default function Home() {
           <Balancer>Super Bowl Prop Bets</Balancer>
         </motion.h1>
       </motion.div>
+      <div className="leaderboard-entry-container">
+        {
+          leaderboardEntries && leaderboardEntries.map((entry, inx) => <LeaderboardEntryComponent key={inx} leaderboardEntry={entry} rank={inx}/>)
+        }
+      </div>
       {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
-      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        {features.map(({ title, description, demo, large }) => (
+      {/* <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0"> */}
+        {/* {features.map(({ title, description, demo, large }) => (
           <Card
             key={title}
             title={title}
@@ -90,8 +97,8 @@ export default function Home() {
             }
             large={large}
           />
-        ))}
-      </div>
+        ))} */}
+      {/* </div> */}
     </Layout>
   );
 }
