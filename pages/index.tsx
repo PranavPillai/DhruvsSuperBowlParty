@@ -67,7 +67,7 @@ export default function Home() {
           className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Balancer>Dhruv's Super Bowl Party 2023</Balancer>
+          <Balancer>{`Dhruv's Super Bowl Party 2023`}</Balancer>
         </motion.h1>
       </motion.div>
       <div className="mt-10 relative col-span-1 h-30 rounded-xl border border-gray-200 bg-white shadow-md m-4">
