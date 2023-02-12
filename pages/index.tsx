@@ -73,10 +73,21 @@ export default function Home() {
           className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Balancer>Super Bowl Prop Bets</Balancer>
+          <Balancer>Dhruv's Super Bowl Party 2023</Balancer>
         </motion.h1>
       </motion.div>
+      <div className="mt-10 relative col-span-1 h-30 rounded-xl border border-gray-200 bg-white shadow-md m-4">
+        <button onClick={() => window.open("https://airtable.com/shrv9KqNoySeI6ZpZ", "_blank")} className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+          Enter Prop Bets
+        </button>
+      </div>
       <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out]">
+        <motion.h1
+          className="mx-5 bg-gradient-to-br from-black to-stone-500 bg-clip-text font-display text-2xl tracking-[-0.02em] text-transparent drop-shadow-sm md:text-5xl md:leading-[5rem]"
+          variants={FADE_DOWN_ANIMATION_VARIANTS}
+        >
+          <Balancer>Prop Bets Leaderboard</Balancer>
+        </motion.h1>
         {
           leaderboardEntries && leaderboardEntries.map((entry, inx) => <LeaderboardEntryComponent key={inx} leaderboardEntry={entry} rank={inx}/>)
         }
