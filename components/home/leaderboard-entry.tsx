@@ -20,12 +20,12 @@ export default function LeaderboardEntryComponent({
 }) {
 
     const iconSize = 15
-    const iconComponents = leaderboardEntry.answers.map((entry) => {
+    const iconComponents = leaderboardEntry.answers.map((entry, inx) => {
     const iconPath = entry.correct ? iconPaths.correct
                 : !entry.answered ? iconPaths.unanswered
                 : iconPaths.incorrect
     return (
-        <div className="mr-4">
+        <div className="mr-4" key={inx}>
             <Image alt="icon" src={iconPath} width={iconSize} height={iconSize} />
         </div>
     )
