@@ -1,12 +1,7 @@
-import Card from "@/components/home/card";
 import Layout from "@/components/layout";
 import Balancer from "react-wrap-balancer";
 import { motion } from "framer-motion";
-import { DEPLOY_URL, FADE_DOWN_ANIMATION_VARIANTS, getAnswersFromAirtableRes, getLeaderboardEntriesFromAirtableRes, LeaderboardEntry } from "@/lib/constants";
-import { Github, Twitter } from "@/components/shared/icons";
-import WebVitals from "@/components/home/web-vitals";
-import ComponentGrid from "@/components/home/component-grid";
-import Image from "next/image";
+import { FADE_DOWN_ANIMATION_VARIANTS, getAnswersFromAirtableRes, getLeaderboardEntriesFromAirtableRes, LeaderboardEntry } from "@/lib/constants";
 import LeaderboardEntryComponent from "@/components/home/leaderboard-entry";
 import { useState, useEffect } from 'react';
 
@@ -44,7 +39,6 @@ export default function Home() {
           const answersObjects = getAnswersFromAirtableRes(answersData);
           const leaderboardObjects = getLeaderboardEntriesFromAirtableRes(responseData, answersObjects);
           
-          console.log(leaderboardObjects)
           setLeaderboardEntries(leaderboardObjects);
           setLoading(false)
         })
