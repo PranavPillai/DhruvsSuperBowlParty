@@ -76,7 +76,7 @@ export default function Home() {
           <Balancer>Super Bowl Prop Bets</Balancer>
         </motion.h1>
       </motion.div>
-      <div className="leaderboard-entry-container">
+      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out]">
         {
           leaderboardEntries && leaderboardEntries.map((entry, inx) => <LeaderboardEntryComponent key={inx} leaderboardEntry={entry} rank={inx}/>)
         }

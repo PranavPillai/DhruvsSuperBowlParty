@@ -82,6 +82,7 @@ export interface LeaderboardEntry {
   submitted_at: any,
   num_correct: number,
   num_answered: number,
+  num_not_answered: number,
   answers: Answer[]
 }
 
@@ -108,12 +109,15 @@ export const getLeaderboardEntriesFromAirtableRes = (
         correct
       }
     })
+
+    const num_answered = answerObjs.filter((q) => q.answered).length
   
     return {
       name: record.fields.Name,
       submitted_at: record.fields["Submitted At"],
       num_correct: answerObjs.filter((q) => q.correct).length,
-      num_answered: answerObjs.filter((q) => q.answered).length,
+      num_answered,
+      num_not_answered: answerObjs.length - num_answered,
       answers: answerObjs
     }
   }).sort((entry1, entry2) => entry2.num_correct - entry1.num_correct)
